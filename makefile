@@ -1,5 +1,5 @@
 FLAGS = -Wall -ansi -pedantic
-OBJS = double_list_main.o key.o element.o double_linked_list.o
+OBJS = double_linked_list_main.o key.o element.o double_linked_list.o
 EXEC = double_linked_list_main
 
 $(EXEC): $(OBJS)
