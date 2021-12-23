@@ -138,7 +138,7 @@ void print_all_list(double_linked_list *list){
 
 void swap_node(double_linked_list **list, int index1, int index2){
     int i = 0;
-    double_linked_list *tmp = *list, *prevtmp, *node1, *node2;
+    double_linked_list *tmp = *list, *node1, *node2, *prev1, *prev2;
 
     if(index1 != index2){
         while(tmp){
@@ -154,28 +154,50 @@ void swap_node(double_linked_list **list, int index1, int index2){
             i++;
         }
 
-        if(node1 -> prev != NULL){
-            node1 -> prev -> next = node2;
+        prev1 = node1 -> prev;
+        prev2 = node2 -> prev;
+
+        if(prev1 != NULL){
+            prev1 -> next = node2;
         }
 
-        if(node2 -> prev != NULL){
-            node2 -> prev -> next = node1;
+        if(prev2 != NULL){
+            prev2 -> next = node1;
         }
 
-        if(node1 -> prev == NULL){
-            *list = node2;
+        if(node1 -> next != NULL){
+            node1 -> next -> prev = node2;
         }
-        
-        if(node2 -> prev == NULL){
-            *list = node1;
+
+        if(node2 -> next != NULL){
+            node2 -> next -> prev = node1;
         }
 
         tmp = node1 -> next;
-        prevtmp = node1 -> prev;
         node1 -> next = node2 -> next;
         node2 -> next = tmp;
-        node1 -> prev = node2 -> prev;
-        node2 -> prev = prevtmp;
+
+        if(index1 == index2 - 1){
+            tmp = node1 -> prev;
+            node1 -> prev = node2;
+            node2 -> prev = tmp;
+        }else if(index2 == index1 - 1){
+            tmp = node2 -> prev;
+            node1 -> prev = node1;
+            node1 -> prev = tmp;
+        }else{
+            tmp = node1 -> prev;
+            node1 -> prev = node2 -> prev;
+            node2 -> prev = tmp;
+        }
+
+        if(prev1 == NULL){
+            *list = node2;
+        }
+        
+        if(prev2 == NULL){
+            *list = node1;
+        }
     }
 }
 
